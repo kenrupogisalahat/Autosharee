@@ -65,40 +65,211 @@
     </script>
 
     <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: contain; background-color: theme('colors.bg-container'); color: theme('colors.text-main'); }
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: theme('colors.primary'); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: theme('colors.primary-darker'); }
-        .content-section { display: none; animation: fadeIn 0.3s ease-out; }
-        .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .section-title { text-align: center; font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; color: inherit; position: relative; padding-bottom: 0.5rem; }
-        .section-title::after { content: ''; display: block; width: 35px; height: 3px; background: theme('colors.primary'); margin: 0.5rem auto 0; border-radius: 2px; box-shadow: theme('boxShadow.primary-glow'); }
-        .modal { display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.7); z-index: 1050; justify-content: center; align-items: center; padding: 1rem; animation: modalFadeIn 0.3s ease-out; }
-        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .modal-content { padding: 1.5rem; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25); text-align: center; min-width: 300px; max-width: 90%; border: 1px solid #444; background-color: theme('colors.modal-bg'); color: theme('colors.text-main'); animation: modalScaleUp 0.3s ease-out; position: relative; }
-        @keyframes modalScaleUp { from { transform: scale(0.95); opacity: 0.7; } to { transform: scale(1); opacity: 1; } }
-        #responseModal .modal-content { padding: 1.75rem; }
-        .modal-content.success { border-left: 5px solid #00BA88; background-color: theme('colors.success-bg'); color: theme('colors.success-text'); }
-        .modal-content.error { border-left: 5px solid theme('colors.primary'); background-color: theme('colors.error-bg'); color: theme('colors.error-text'); }
-        .tutorial-video { width: 100%; max-width: 100%; height: auto; border-radius: 0.75rem; background-color: #000; border: 1px solid theme('colors.border-color'); box-shadow: theme('boxShadow.card'); display: block; }
-        .nav-item { transition: color 0.2s ease-in-out; }
-        .nav-indicator { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        input:focus, textarea:focus, select:focus, button:focus-visible { outline: 2px solid theme('colors.primary') !important; outline-offset: 2px; }
-        button, .nav-item, .server-item { user-select: none; -webkit-user-select: none; }
-        .server-item { transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out; cursor: pointer; }
-        .server-item:not(.disabled):hover { background-color: theme('colors.server-item-bg-hover'); }
-        .server-item.disabled { cursor: not-allowed; opacity: 0.5; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-        .modal-close-button { position: absolute; top: 0.75rem; right: 0.75rem; padding: 0.5rem; border-radius: 9999px; background-color: rgba(255, 255, 255, 0.1); line-height: 1; transition: background-color 0.2s; }
-        .modal-close-button:hover { background-color: rgba(255, 255, 255, 0.2); }
-        .form-checkbox { appearance: none; -webkit-appearance: none; background-color: theme('colors.input-bg'); border: 1px solid theme('colors.input-border'); border-radius: 0.25rem; padding: 0; display: inline-block; vertical-align: middle; position: relative; cursor: pointer; }
-        .form-checkbox:checked { background-color: theme('colors.primary'); border-color: theme('colors.primary'); }
-        .form-checkbox:checked::after { content: ''; display: block; width: 5px; height: 9px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); position: absolute; top: 1px; left: 4px; }
-        .form-checkbox:focus { outline: 2px solid theme('colors.primary') !important; outline-offset: 1px; }
+        html {
+            scroll-behavior: smooth;
+        }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: contain;
+            background-color: theme('colors.bg-container');
+            color: theme('colors.text-main');
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.primary');
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.primary-darker');
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: inherit;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 35px;
+            height: 3px;
+            background: theme('colors.primary');
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+            box-shadow: theme('boxShadow.primary-glow');
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1050;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            min-width: 300px;
+            max-width: 90%;
+            border: 1px solid #444;
+            background-color: theme('colors.modal-bg');
+            color: theme('colors.text-main');
+            animation: modalScaleUp 0.3s ease-out;
+            position: relative;
+        }
+
+        @keyframes modalScaleUp {
+            from {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #responseModal .modal-content {
+            padding: 1.75rem;
+        }
+
+        .modal-content.success {
+            border-left: 5px solid #00BA88;
+            background-color: theme('colors.success-bg');
+            color: theme('colors.success-text');
+        }
+
+        .modal-content.error {
+            border-left: 5px solid theme('colors.primary');
+            background-color: theme('colors.error-bg');
+            color: theme('colors.error-text');
+        }
+
+        .tutorial-video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            background-color: #000;
+            border: 1px solid theme('colors.border-color');
+            box-shadow: theme('boxShadow.card');
+            display: block;
+        }
+
+        .nav-item {
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-indicator {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus,
+        button:focus-visible {
+            outline: 2px solid theme('colors.primary') !important;
+            outline-offset: 2px;
+        }
+
+        button,
+        .nav-item,
+        .server-item {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .server-item {
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .server-item:not(.disabled):hover {
+            background-color: theme('colors.server-item-bg-hover');
+        }
+
+        .server-item.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+            transition: background-color 0.2s;
+        }
+
+        .modal-close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 
@@ -243,11 +414,7 @@
                     <i data-lucide="download" class="w-4 h-4"></i>
                     Download APK
                 </a>
-                <div class="flex items-center justify-center space-x-2 mt-3">
-                     <input type="checkbox" id="dontShowApkAgain" class="form-checkbox h-4 w-4 text-primary bg-input-bg border-input-border rounded focus:ring-primary/50 focus:ring-offset-0 focus:outline-none">
-                     <label for="dontShowApkAgain" class="text-xs text-text-muted cursor-pointer">Don't show this again</label>
-                </div>
-                 <button type="button" class="text-xs text-text-muted hover:text-text-main underline mt-2" onclick="handleApkModalClose('later')">
+                <button type="button" class="text-xs text-text-muted hover:text-text-main underline mt-2" onclick="handleApkModalClose('later')">
                     Maybe Later
                 </button>
             </div>
@@ -260,9 +427,18 @@
         lucide.createIcons();
 
         const serverDefinitions = {
-            server1: { name: "Server 1", url: 'https://server1-u9fw.onrender.com' },
-            server2: { name: "Server 2", url: 'https://server-2-aggj.onrender.com' },
-            server3: { name: "Server 3", url: 'https://server-3-p6lg.onrender.com' }
+            server1: {
+                name: "Server 1",
+                url: 'https://server1-u9fw.onrender.com'
+            },
+            server2: {
+                name: "Server 2",
+                url: 'https://server-2-aggj.onrender.com'
+            },
+            server3: {
+                name: "Server 3",
+                url: 'https://server-3-p6lg.onrender.com'
+            }
         };
 
         const submitButton = document.getElementById('submit-button');
@@ -283,19 +459,12 @@
         let currentSelectedServer = null;
 
         function handleApkModalClose(action) {
-            const dontShowCheckbox = document.getElementById('dontShowApkAgain');
-            const threeHoursInMillis = 3 * 60 * 60 * 1000;
+            const oneHourInMillis = 1 * 60 * 60 * 1000;
+            const dismissUntilTimestamp = Date.now() + oneHourInMillis;
+            localStorage.setItem('apkPopupDismissedUntil', dismissUntilTimestamp.toString());
+            localStorage.removeItem('apkPopupDismissedPermanently');
+            console.log(`APK Popup: Dismissed via '${action}' until ${new Date(dismissUntilTimestamp).toLocaleString()}`);
 
-            if (dontShowCheckbox && dontShowCheckbox.checked) {
-                localStorage.setItem('apkPopupDismissedPermanently', 'true');
-                localStorage.removeItem('apkPopupDismissedUntil');
-                console.log("APK Popup: Permanently dismissed.");
-            } else if (action === 'later') {
-                const dismissUntilTimestamp = Date.now() + threeHoursInMillis;
-                localStorage.setItem('apkPopupDismissedUntil', dismissUntilTimestamp.toString());
-                localStorage.removeItem('apkPopupDismissedPermanently');
-                console.log(`APK Popup: Dismissed until ${new Date(dismissUntilTimestamp).toLocaleString()}`);
-            }
             if (apkDownloadModal) {
                 apkDownloadModal.style.display = 'none';
             }
@@ -350,7 +519,7 @@
             } else if (shouldBeEnabled) {
                 submitButton.classList.add('bg-primary', 'hover:bg-primary-darker');
             } else {
-                 submitButton.classList.add('bg-primary');
+                submitButton.classList.add('bg-primary');
             }
         }
 
@@ -372,7 +541,10 @@
                 try {
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 6000);
-                    await fetch(server.url, { signal: controller.signal, mode: 'no-cors' });
+                    await fetch(server.url, {
+                        signal: controller.signal,
+                        mode: 'no-cors'
+                    });
                     clearTimeout(timeoutId);
                     statusText = 'Active';
                     statusColor = 'bg-status-active';
@@ -406,16 +578,16 @@
             await Promise.all(statusPromises);
 
             if (buttonText.textContent !== 'Submitting...') {
-                 if (!oneServerActive) {
-                     updateButtonState('All Servers Offline', 'alert-triangle', false, true);
-                     if (currentSelectedServer) {
+                if (!oneServerActive) {
+                    updateButtonState('All Servers Offline', 'alert-triangle', false, true);
+                    if (currentSelectedServer) {
                         currentSelectedServer = null;
                         selectedServerInput.value = '';
                         serverSelectButtonText.textContent = 'Select a Server...';
                     }
-                 } else {
-                     validateForm();
-                 }
+                } else {
+                    validateForm();
+                }
             }
 
             clearInterval(intervalCheck);
@@ -467,18 +639,18 @@
             }
         });
 
-        if(apkDownloadModal) {
+        if (apkDownloadModal) {
             apkDownloadModal.addEventListener('click', (event) => {
-                 if (event.target === apkDownloadModal) {
+                if (event.target === apkDownloadModal) {
                     handleApkModalClose('later');
-                 }
+                }
             });
         }
 
         function validateForm() {
             const serverSelected = selectedServerInput.value !== '';
             const anyServerActive = Array.from(serverListContainer.querySelectorAll('.server-item'))
-                                         .some(item => !item.classList.contains('disabled'));
+                .some(item => !item.classList.contains('disabled'));
 
             const allInputsFilled = Array.from(form.elements).every(el => {
                 if (el.required) {
@@ -492,9 +664,8 @@
             } else if (!serverSelected) {
                 updateButtonState('Select Server First', 'alert-circle', false, false);
             } else if (!allInputsFilled) {
-                 updateButtonState('Fill All Fields', 'edit-3', false, false);
-            }
-            else {
+                updateButtonState('Fill All Fields', 'edit-3', false, false);
+            } else {
                 updateButtonState('Start Boosting', 'rocket', true, false);
             }
         }
@@ -514,11 +685,11 @@
             const cookie = document.getElementById('cookies').value;
             const interval = document.getElementById('intervals').value;
 
-             if (!url || !amount || !cookie || !interval) {
+            if (!url || !amount || !cookie || !interval) {
                 showModal('Please fill in all required fields.', 'error');
                 validateForm();
                 return;
-             }
+            }
 
             updateButtonState('Submitting...', 'loader-circle', false);
             showModal('Submitting request...', 'loading');
@@ -545,7 +716,10 @@
                 try {
                     data = await response.json();
                 } catch (jsonError) {
-                    data = { status: response.status, message: `Server returned non-JSON response. Status: ${response.status}` };
+                    data = {
+                        status: response.status,
+                        message: `Server returned non-JSON response. Status: ${response.status}`
+                    };
                 }
 
                 if (!response.ok || (data && data.status !== 200 && response.status !== 200)) {
@@ -560,18 +734,18 @@
                 validateForm();
 
             } catch (error) {
-                const errorMessage = error.name === 'TimeoutError'
-                    ? 'Request timed out. Server might be busy or unresponsive.'
-                    : `Error: ${error.message}`;
+                const errorMessage = error.name === 'TimeoutError' ?
+                    'Request timed out. Server might be busy or unresponsive.' :
+                    `Error: ${error.message}`;
                 showModal(errorMessage, 'error');
                 validateForm();
             } finally {
-                 if (responseModalIconElement.querySelector('[data-lucide="loader-circle"]')) {
+                if (responseModalIconElement.querySelector('[data-lucide="loader-circle"]')) {
                     responseModal.style.display = 'none';
-                 }
-                 if (buttonText.textContent === 'Submitting...') {
+                }
+                if (buttonText.textContent === 'Submitting...') {
                     validateForm();
-                 }
+                }
             }
         };
 
@@ -617,30 +791,28 @@
             });
 
             if (apkDownloadModal) {
-                const dismissedPermanently = localStorage.getItem('apkPopupDismissedPermanently') === 'true';
                 const dismissedUntilRaw = localStorage.getItem('apkPopupDismissedUntil');
                 const dismissedUntil = dismissedUntilRaw ? parseInt(dismissedUntilRaw, 10) : 0;
                 const now = Date.now();
 
-                console.log("APK Check:", { dismissedPermanently, dismissedUntil: dismissedUntilRaw ? new Date(dismissedUntil).toLocaleString() : 'N/A', now: new Date(now).toLocaleString() });
+                console.log("APK Check:", {
+                    dismissedUntil: dismissedUntilRaw ? new Date(dismissedUntil).toLocaleString() : 'N/A',
+                    now: new Date(now).toLocaleString()
+                });
 
-                if (!dismissedPermanently && now > dismissedUntil) {
+                if (now > dismissedUntil) {
                     console.log("Showing APK Popup");
                     apkDownloadModal.style.display = 'flex';
-                    const dontShowCheckbox = document.getElementById('dontShowApkAgain');
-                    if (dontShowCheckbox) {
-                        dontShowCheckbox.checked = dismissedPermanently;
-                    }
                     lucide.createIcons();
                 } else {
-                    console.log("APK Popup hidden due to user preference.");
+                    console.log("APK Popup hidden until dismissal time.");
                     apkDownloadModal.style.display = 'none';
                 }
             }
 
             lucide.createIcons();
         }
-
     </script>
 </body>
+
 </html>

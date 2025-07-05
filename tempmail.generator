@@ -1,0 +1,29 @@
+module.exports.config = {
+    name: "tempmail",
+    version: "1.0.5",
+    hasPermssion: 0,
+    credits: "Deku",
+    description: "Generate temporary email.",
+    usages: "[gen/inbox (token)]",
+    commandCategory: "...",
+   usePrefix: false,
+    cooldowns: 2,
+};
+module.exports.run = async function ({ api, event, args, Users }) {
+let a = args[0],
+b = args[1];
+const { get } = require("axios");
+if (!a) return api.sendMessage("Use <tempmail gen> to generate temporary email or <tempmail inbox [token]> to get the mails", event.threadID, event.messageID);
+if (a == "gen") {
+const res = await get("https://free-api.ainz-sama101.repl.co/others/tempmail");
+var { email, token } = res.data;
+api.sendMessage("Your email :"+email+"\n\nYour email token :"+token, event.threadID, event.messageID);
+}
+  if (a == "inbox"){
+if(!b) return api.sendMessage("Missing token!", event.threadID, event.messageID);
+const res = await get("https://free-api.ainz-sama101.repl.co/others/getinbox?token="+b);
+var m = res.data.message;
+api.sendMessage("Result: "+m, event.threadID, event.messageID)
+   }
+else return;
+ }

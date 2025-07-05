@@ -1,1 +1,1 @@
-# Autosharee
+# tempmail.generator
